@@ -103,3 +103,8 @@ void AMyPawn::StopGrowing()
 	bGrowing = false;
 }
 
+void AMyPawn::DoTestLog(FString message)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Pawn heard someone say: %s"), *message);
+}
+

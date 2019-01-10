@@ -41,4 +41,7 @@ public:
 	//Input variables
 	FVector CurrentVelocity;
 	bool bGrowing;
+
+	UFUNCTION(BlueprintCallable, Category = "Test")
+		void DoTestLog(FString message);
 };
