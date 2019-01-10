@@ -58,9 +58,10 @@ void AMyPawn::Tick(float DeltaTime)
 		if (!CurrentVelocity.IsZero())
 		{
 			//FVector NewLocation = GetActorLocation() + (CurrentVelocity * DeltaTime);
+			CurrentVelocity = CurrentVelocity.GetSafeNormal();
 			FVector CurrentTranslation = FVector(CurrentVelocity.Y, CurrentVelocity.X, 0.f);
 			FVector CurrentLocation = GetActorLocation();
-			FVector NewLocation = CurrentLocation + (CurrentTranslation * DeltaTime);
+			FVector NewLocation = CurrentLocation + (CurrentTranslation * DeltaTime * Speed);
 			SetActorLocation(NewLocation);
 		}
 	}
@@ -83,13 +84,13 @@ void AMyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void AMyPawn::Move_XAxis(float AxisValue)
 {
 	// Move at 100 units per second forward or backward
-	CurrentVelocity.X = FMath::Clamp(AxisValue, -1.0f, 1.0f) * 100.0f;
+	CurrentVelocity.X = FMath::Clamp(AxisValue, -1.0f, 1.0f);
 }
 
 void AMyPawn::Move_YAxis(float AxisValue)
 {
 	// Move at 100 units per second right or left
-	CurrentVelocity.Y = FMath::Clamp(AxisValue, -1.0f, 1.0f) * 100.0f;
+	CurrentVelocity.Y = FMath::Clamp(AxisValue, -1.0f, 1.0f);
 }
 
 void AMyPawn::StartGrowing()

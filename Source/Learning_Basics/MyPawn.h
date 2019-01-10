@@ -27,6 +27,9 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere)
+		float Speed = 2.f;
+
+	UPROPERTY(EditAnywhere)
 		USceneComponent* OurVisibleComponent;
 
 	//Input functions
