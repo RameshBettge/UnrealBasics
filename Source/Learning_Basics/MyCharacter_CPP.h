@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Runtime/Engine/Classes/Components/CapsuleComponent.h"
 #include "MyCharacter_CPP.generated.h"
 
 UCLASS()
@@ -26,12 +27,21 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	//UPROPERTY(EditAnywhere);
+	//UCapsuleComponent MyCapsuleComponent;
+
 	void SetMove(float value);
 	
 	void ApplyMove(float deltaTime);
 
 	void DoJump();
 	void DoStopJump();
+
+	//UFUNCTION();
+	//void MyOnCollision(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
+	////UFUNCTION();
+	//void SimpleMyOnCollision();
 	
 	float MoveVal;
 

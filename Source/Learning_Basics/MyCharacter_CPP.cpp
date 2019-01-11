@@ -2,6 +2,7 @@
 
 #include "MyCharacter_CPP.h"
 #include "Runtime/Engine/Classes/Components/InputComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -17,6 +18,12 @@ void AMyCharacter_CPP::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//MyCapsuleComponent->OnComponentHit.Add(AMyCharacter_CPP::MyOnCollision);
+	//MyCapsuleComponent->OnComponentHit.AddDynamic(this, &AMyCharacter_CPP::MyOnCollision);
+
+	/*AActor* owner = GetOwner();
+	if (owner) {
+	}*/
 }
 
 // Called every frame
@@ -47,7 +54,6 @@ void AMyCharacter_CPP::SetMove(float value)
 void AMyCharacter_CPP::ApplyMove(float deltaTime)
 {
 	float movement = MoveVal * deltaTime * SpeedMultiplicator;
-	UE_LOG(LogTemp, Warning, TEXT("Ticking! %f"), movement);
 	AddMovementInput(FVector::RightVector, movement);
 }
 
@@ -60,4 +66,13 @@ void AMyCharacter_CPP::DoStopJump()
 {
 	StopJumping();
 }
+
+//void AMyCharacter_CPP::MyOnCollision(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
+//{
+//	UE_LOG(LogTemp, Warning, TEXT("Hit something: %s"), *OtherActor->GetName());
+//}
+//
+//void AMyCharacter_CPP::SimpleMyOnCollision()
+//{
+//}
 
