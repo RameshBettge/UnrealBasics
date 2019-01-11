@@ -27,8 +27,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	//UPROPERTY(EditAnywhere);
-	//UCapsuleComponent MyCapsuleComponent;
+	//UPROPERTY(EditAnywhere)
+	UCapsuleComponent* MyCapsuleComponent;
 
 	void SetMove(float value);
 	
@@ -37,11 +37,11 @@ public:
 	void DoJump();
 	void DoStopJump();
 
-	//UFUNCTION();
-	//void MyOnCollision(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	UFUNCTION()
+	void MyOnCollision(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
-	////UFUNCTION();
-	//void SimpleMyOnCollision();
+	UFUNCTION()
+	void SimpleMyOnCollision();
 	
 	float MoveVal;
 

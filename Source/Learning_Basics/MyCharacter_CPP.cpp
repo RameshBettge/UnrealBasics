@@ -18,8 +18,15 @@ void AMyCharacter_CPP::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//MyCapsuleComponent->OnComponentHit.Add(AMyCharacter_CPP::MyOnCollision);
-	//MyCapsuleComponent->OnComponentHit.AddDynamic(this, &AMyCharacter_CPP::MyOnCollision);
+	//MyCapsuleComponent = Cast<UCapsuleComponent>(GetOwner()->GetComponentByClass(UCapsuleComponent::StaticClass()));
+	MyCapsuleComponent = Cast<UCapsuleComponent>(GetComponentByClass(UCapsuleComponent::StaticClass()));
+	if (MyCapsuleComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("My Capsule component is: %s"), *MyCapsuleComponent->GetName());
+
+		//MyCapsuleComponent->OnComponentHit.Add(this, &AMyCharacter_CPP::MyOnCollision);
+		MyCapsuleComponent->OnComponentHit.AddDynamic(this, &AMyCharacter_CPP::MyOnCollision);
+	}
 
 	/*AActor* owner = GetOwner();
 	if (owner) {
@@ -67,12 +74,12 @@ void AMyCharacter_CPP::DoStopJump()
 	StopJumping();
 }
 
-//void AMyCharacter_CPP::MyOnCollision(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
-//{
-//	UE_LOG(LogTemp, Warning, TEXT("Hit something: %s"), *OtherActor->GetName());
-//}
-//
-//void AMyCharacter_CPP::SimpleMyOnCollision()
-//{
-//}
+void AMyCharacter_CPP::MyOnCollision(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Hit something: %s"), *OtherActor->GetName());
+}
+
+void AMyCharacter_CPP::SimpleMyOnCollision()
+{
+}
 
