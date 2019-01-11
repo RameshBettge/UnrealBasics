@@ -27,6 +27,7 @@ void AMyCharacter_CPP::BeginPlay()
 
 		// Also bind function to BeginOverlap. It is like Unity's OnTriggerEnter.
 		MyCapsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &AMyCharacter_CPP::OnMyOverlap);
+		MyCapsuleComponent->OnComponentEndOverlap.AddDynamic(this, &AMyCharacter_CPP::OnMyEndOverlap);
 	}
 }
 
@@ -68,11 +69,13 @@ void AMyCharacter_CPP::MyOnCollision(UPrimitiveComponent * HitComp, AActor * Oth
 
 void AMyCharacter_CPP::OnMyOverlap(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Overlapped with something: %s"), *OtherActor->GetName());
+	UE_LOG(LogTemp, Warning, TEXT("Overlapped with: %s"), *OtherActor->GetName());
 }
 
-//void AMyCharacter_CPP::OnMyOverlap(FComponentBeginOverlapSignature Signature)
-//{
-//	UE_LOG(LogTemp, Warning, TEXT("Overlapped something."));
-//}
+void AMyCharacter_CPP::OnMyEndOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Ended overlap with: %s"), *OtherActor->GetName());
+}
+
+
 

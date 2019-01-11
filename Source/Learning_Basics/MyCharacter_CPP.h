@@ -48,6 +48,9 @@ public:
 			bool bFromSweep,
 			const FHitResult &SweepResult);
 
+	UFUNCTION()
+		void OnMyEndOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
 	float MoveVal;
 
 	UPROPERTY(EditAnywhere)
