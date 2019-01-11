@@ -34,15 +34,20 @@ public:
 	
 	void ApplyMove(float deltaTime);
 
-	void DoJump();
-	void DoStopJump();
-
 	UFUNCTION()
-	void MyOnCollision(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	void MyOnCollision(UPrimitiveComponent*	HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
-	UFUNCTION()
-	void SimpleMyOnCollision();
+	/*UFUNCTION()
+		void OnMyOverlap(FComponentBeginOverlapSignature Signature);*/
 	
+	UFUNCTION()
+		void OnMyOverlap(UPrimitiveComponent* OverlappedComponent,
+			AActor* OtherActor,
+			UPrimitiveComponent* OtherComp,
+			int32 OtherBodyIndex,
+			bool bFromSweep,
+			const FHitResult &SweepResult);
+
 	float MoveVal;
 
 	UPROPERTY(EditAnywhere)

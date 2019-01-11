@@ -18,19 +18,16 @@ void AMyCharacter_CPP::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//MyCapsuleComponent = Cast<UCapsuleComponent>(GetOwner()->GetComponentByClass(UCapsuleComponent::StaticClass()));
+	// Gets a component and binds MyOnCollision() to it's Hit event, which is like Unity's OnCollisionEnter
 	MyCapsuleComponent = Cast<UCapsuleComponent>(GetComponentByClass(UCapsuleComponent::StaticClass()));
 	if (MyCapsuleComponent)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("My Capsule component is: %s"), *MyCapsuleComponent->GetName());
-
-		//MyCapsuleComponent->OnComponentHit.Add(this, &AMyCharacter_CPP::MyOnCollision);
 		MyCapsuleComponent->OnComponentHit.AddDynamic(this, &AMyCharacter_CPP::MyOnCollision);
-	}
 
-	/*AActor* owner = GetOwner();
-	if (owner) {
-	}*/
+		// Also bind function to BeginOverlap. It is like Unity's OnTriggerEnter.
+		MyCapsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &AMyCharacter_CPP::OnMyOverlap);
+	}
 }
 
 // Called every frame
@@ -48,14 +45,14 @@ void AMyCharacter_CPP::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	PlayerInputComponent->BindAxis("MoveX", this, &AMyCharacter_CPP::SetMove);
 
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMyCharacter_CPP::DoJump);
+	// Bind input to Functions which are already implemented in ACharacter
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMyCharacter_CPP::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &AMyCharacter_CPP::StopJumping);
 }
 
 void AMyCharacter_CPP::SetMove(float value)
 {
 	MoveVal = value;
-
 }
 
 void AMyCharacter_CPP::ApplyMove(float deltaTime)
@@ -64,22 +61,18 @@ void AMyCharacter_CPP::ApplyMove(float deltaTime)
 	AddMovementInput(FVector::RightVector, movement);
 }
 
-void AMyCharacter_CPP::DoJump()
-{
-	Jump();
-}
-
-void AMyCharacter_CPP::DoStopJump()
-{
-	StopJumping();
-}
-
 void AMyCharacter_CPP::MyOnCollision(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Hit something: %s"), *OtherActor->GetName());
 }
 
-void AMyCharacter_CPP::SimpleMyOnCollision()
+void AMyCharacter_CPP::OnMyOverlap(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
+	UE_LOG(LogTemp, Warning, TEXT("Overlapped with something: %s"), *OtherActor->GetName());
 }
+
+//void AMyCharacter_CPP::OnMyOverlap(FComponentBeginOverlapSignature Signature)
+//{
+//	UE_LOG(LogTemp, Warning, TEXT("Overlapped something."));
+//}
 
