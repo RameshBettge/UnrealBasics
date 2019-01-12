@@ -35,4 +35,9 @@ public:
 	AActor* OtherActor = nullptr;
 
 	void GiveParticipantName();
+
+	void GenerateMoreParticipants(int Amount);
+
+	UPROPERTY(EditAnywhere)
+		TArray<UCPP_Participant*> MoreParticipants;
 };
