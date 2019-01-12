@@ -53,8 +53,12 @@ public:
 
 	float MoveVal;
 
+	/*UFUNCTION(BlueprintNativeEvent, BlueprintCallable, meta = (DisplayName = "MyBlueprintNativeEvent"))
+		void ReceiveMyBlueprintNativeEvent();*/
+
 	UPROPERTY(EditAnywhere)
 		float SpeedMultiplicator;
 
-
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "MyBlueprintImplementableEvent"))
+		void ReceiveMyBlueprintImplementableEvent();
 };

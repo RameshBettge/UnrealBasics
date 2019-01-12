@@ -29,6 +29,9 @@ void AMyCharacter_CPP::BeginPlay()
 		MyCapsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &AMyCharacter_CPP::OnMyOverlap);
 		MyCapsuleComponent->OnComponentEndOverlap.AddDynamic(this, &AMyCharacter_CPP::OnMyEndOverlap);
 	}
+
+	//Call function which can be implemented in blueprint.
+	this->ReceiveMyBlueprintImplementableEvent();
 }
 
 // Called every frame
@@ -37,6 +40,7 @@ void AMyCharacter_CPP::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	ApplyMove(DeltaTime);
+
 }
 
 // Called to bind functionality to input
@@ -71,11 +75,21 @@ void AMyCharacter_CPP::OnMyOverlap(UPrimitiveComponent * OverlappedComponent, AA
 {
 	UE_LOG(LogTemp, Warning, TEXT("Overlapped with: %s"), *OtherActor->GetName());
 }
-
 void AMyCharacter_CPP::OnMyEndOverlap(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Ended overlap with: %s"), *OtherActor->GetName());
 }
+
+////void AMyCharacter_CPP::ReceiveMyBlueprintNativeEvent()
+////{
+////}
+//void AMyCharacter_CPP::ReceiveMyBlueprintNativeEvent_Internal()
+//{
+//}
+//void AMyCharacter_CPP::ReceiveMyBlueprintNativeEvent_Implementation()
+//{
+//	UE_LOG(LogTemp, Warning, TEXT("Standard implementation of 'MyBlueprintNativeEvent'. Info is: '%s'"), *info);
+//}
 
 
 
