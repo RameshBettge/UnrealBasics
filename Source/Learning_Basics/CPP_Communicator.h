@@ -25,5 +25,14 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditAnywhere)
 	UCPP_Participant *MyParticipant = nullptr;
+
+	UPROPERTY(EditAnywhere)
+		bool IsLead = false;
+
+	UPROPERTY(EditAnywhere)
+	AActor* OtherActor = nullptr;
+
+	void GiveParticipantName();
 };
