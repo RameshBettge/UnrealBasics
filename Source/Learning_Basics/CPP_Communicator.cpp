@@ -19,6 +19,20 @@ ACPP_Communicator::ACPP_Communicator()
 
 	int Amount = FMath::RandRange(1, 3);
 	UE_LOG(LogTemp, Warning, TEXT("CPP_Communicator is being constucted."));
+
+	UWorld* MyWorld = GetWorld();
+
+	if (MyWorld)
+	{
+		for (int32 i = 0; i < 14; i++)
+		{
+			//Spawn Objects
+			UMyUObject* MyObject = NewObject<UMyUObject>();
+
+			MyObject->TestInt += i;
+			MyObjects.Add(MyObject);
+		}
+	}
 }
 
 // Called when the game starts or when spawned
@@ -26,14 +40,13 @@ void ACPP_Communicator::BeginPlay()
 {
 	Super::BeginPlay();
 
-
 	UWorld* MyWorld = GetWorld();
 
 	if (MyWorld)
 	{
-
 		for (int32 i = 0; i < 4; i++)
 		{
+			// Spawn Actors
 			ACPP_Communicator* Communicator = this;
 			AActor_Participant* MyActorParticipant = MyWorld->SpawnActor<AActor_Participant>(FVector(0.f, 0.f, 0.f), FRotator(0.f, 0.f, 0.f));
 
@@ -43,7 +56,20 @@ void ACPP_Communicator::BeginPlay()
 			MyActorParticipant->TestInt = i;
 
 			ActorParticipants.Add(MyActorParticipant);
+
+			////Spawn Objects
+			//UMyUObject* MyObject = NewObject<UMyUObject>();
+
+			//MyObject->TestInt += i;
+			//MyObjects.Add(MyObject);
+
+
 		}
+	}
+	//Increase int of UObjects -> It will be saved even after stopping playmode.
+	for (int32 i = 0; i < (MyObjects.Num()-1); i++)
+	{
+		MyObjects[i]->TestInt++;
 	}
 
 

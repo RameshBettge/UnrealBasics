@@ -6,8 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "CPP_Participant.h"
 #include "Actor_Participant.h"
-
+#include "MyUObject.h"
 #include "CPP_Communicator.generated.h"
+
 
 UCLASS()
 class LEARNING_BASICS_API ACPP_Communicator : public AActor
@@ -39,4 +40,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		TArray<AActor_Participant*> ActorParticipants;
+
+	UPROPERTY(EditAnywhere)
+	TArray<UMyUObject*> MyObjects;
 };
