@@ -4,19 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "CPP_Participant.h"
-#include "Actor_Participant.h"
-
-#include "CPP_Communicator.generated.h"
+#include "Actor_Participant.generated.h"
 
 UCLASS()
-class LEARNING_BASICS_API ACPP_Communicator : public AActor
+class LEARNING_BASICS_API AActor_Participant : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ACPP_Communicator();
+	AActor_Participant();
 
 protected:
 	// Called when the game starts or when spawned
@@ -27,16 +24,5 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere)
-	UCPP_Participant *MyParticipant = nullptr;
-
-	UPROPERTY(EditAnywhere)
-		bool IsLead = false;
-
-	UPROPERTY(EditAnywhere)
-	AActor* OtherActor = nullptr;
-
-	void GiveParticipantName();
-
-	UPROPERTY(EditAnywhere)
-		TArray<AActor_Participant*> ActorParticipants;
+	int32 TestInt;
 };
