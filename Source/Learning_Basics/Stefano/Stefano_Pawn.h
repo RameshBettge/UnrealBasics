@@ -28,29 +28,38 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditAnywhere)
-		float MoveSpeed = 400.f;
-
-	UPROPERTY(EditAnywhere)
-		float Gravity = -100.f;
-
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent *Mesh;
 
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent *Camera;
 
+	UPROPERTY(VisibleAnywhere, meta = (Category = "Movement"))
+		float MoveSpeed = 400.f;
+
+	UPROPERTY(EditAnywhere, meta = (Category = "Movement"))
+		float Drag = 0.05f;
+
+
+	UPROPERTY(VisibleAnywhere, meta = (Category = "Gravity"))
+		float Gravity = -100.f;
+
+	FVector Velocity;
+
+	float MoveInput;
+
 	AActor* CollisionObject;
 
-
-	void SetMoveInput(float Input);
+	void UpdateVelocity(float Input);
 
 	void Move(float DeltaTime);
 
 	void DoJump();
 
-	void OnCollision(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
+	//void OnComponentHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
-	float MoveInput;
+	void AddGravity(float DeltaTime);
+
+	bool Grounded;
 
 };
