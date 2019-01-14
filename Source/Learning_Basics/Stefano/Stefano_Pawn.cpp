@@ -17,7 +17,7 @@ AStefano_Pawn::AStefano_Pawn()
 	Camera->SetRelativeLocation(FVector(-600.f, 0.f, 200.f));
 	Camera->SetRelativeRotation(FRotator(-15.f, 0.f, 0.f));
 
-	Mesh->OnComponentHit.AddDynamic(this, &AStefano_Pawn::OnComponentHit);
+	//Mesh->OnComponentHit.AddDynamic(this, &AStefano_Pawn::OnComponentHit);
 }
 
 // Called when the game starts or when spawned
@@ -62,20 +62,18 @@ void AStefano_Pawn::Move(float DeltaTime)
 	FHitResult Hit(1.f);
 	if (Movement.SizeSquared() > 0.0f)
 	{
-
 		RootComponent->MoveComponent(Movement, Rot, true, &Hit);
-
-		//if (Hit.IsValidBlockingHit())
-		//{
-		//	const FVector Normal2D = Hit.Normal.GetSafeNormal2D();
-		//	const FVector Deflection = FVector::VectorPlaneProject(Movement, Normal2D) * (1.f - Hit.Time);
-		//	RootComponent->MoveComponent(Deflection, NewRotation, true);
-		//}
 	}
 }
 
 void AStefano_Pawn::DoJump()
 {
+	if (IsGrounded)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Jumping."));
+
+		Velocity.Z = JumpForce;
+	}
 }
 
 void AStefano_Pawn::AddGravity(float DeltaTime)
@@ -100,7 +98,7 @@ void AStefano_Pawn::AddGravity(float DeltaTime)
 
 		//UE_LOG(LogTemp, Warning, TEXT("Normal2D = (%f, %f, %f)"), MyNormal.X, MyNormal.Y, MyNormal.Z);
 
-		if (MyNormal.Z > 0.5f)
+		if (MyNormal.Z > 0.5f && Velocity.Z < 0.0f)
 		{
 			IsGrounded = true;
 			Velocity.Z = 0.f;
@@ -111,8 +109,8 @@ void AStefano_Pawn::AddGravity(float DeltaTime)
 
 }
 
-void AStefano_Pawn::OnComponentHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
-{
-	UE_LOG(LogTemp, Warning, TEXT("Hit actor: %s"), *OtherActor->GetName());
-}
+//void AStefano_Pawn::OnComponentHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
+//{
+//	UE_LOG(LogTemp, Warning, TEXT("Hit actor: %s"), *OtherActor->GetName());
+//}
 

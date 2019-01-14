@@ -40,9 +40,14 @@ public:
 	UPROPERTY(EditAnywhere, meta = (Category = "Movement"))
 		float Drag = 0.05f;
 
+	UPROPERTY(EditAnywhere, meta = (Category = "Movement|Jumping"))
+		float JumpForce = 10000.f;
 
-	UPROPERTY(VisibleAnywhere, meta = (Category = "Gravity"))
+	UPROPERTY(EditAnywhere, meta = (Category = "Gravity"))
 		float Gravity = -100.f;
+
+	UPROPERTY(EditAnywhere, meta = (Category = "Debug"))
+	bool IsGrounded;
 
 	FVector Velocity;
 
@@ -56,10 +61,9 @@ public:
 
 	void DoJump();
 
-	void OnComponentHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	//void OnComponentHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 	void AddGravity(float DeltaTime);
 
-	bool IsGrounded;
 
 };
