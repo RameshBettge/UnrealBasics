@@ -34,20 +34,26 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent *Camera;
 
-	UPROPERTY(VisibleAnywhere, meta = (Category = "Movement"))
-		float MoveSpeed = 400.f;
+	UPROPERTY(EditAnywhere, meta = (Category = "Movement"))
+		float MoveSpeed = 700.f;
 
 	UPROPERTY(EditAnywhere, meta = (Category = "Movement"))
-		float Drag = 0.05f;
+		float YDrag = 0.05f;
 
 	UPROPERTY(EditAnywhere, meta = (Category = "Movement|Jumping"))
 		float JumpForce = 10000.f;
 
-	UPROPERTY(EditAnywhere, meta = (Category = "Gravity"))
-		float Gravity = -100.f;
+	UPROPERTY(EditAnywhere, meta = (Category = "Movement|Gravity"))
+		float LightGravity = -100.f;
 
-	UPROPERTY(EditAnywhere, meta = (Category = "Debug"))
+	UPROPERTY(EditAnywhere, meta = (Category = "Movement|Gravity"))
+		float HeavyGravity = -300.f;
+
+	UPROPERTY(VisibleAnywhere, meta = (Category = "Debugging"))
 	bool IsGrounded;
+
+	UPROPERTY(VisibleAnywhere, meta = (Category = "Debugging"))
+		bool JumpPressed;
 
 	FVector Velocity;
 
@@ -57,13 +63,14 @@ public:
 
 	void UpdateVelocity(float Input);
 
-	void Move(float DeltaTime);
+	void MoveHorizontal(float DeltaTime);
+	void MoveVertical(float DeltaTime);
 
 	void DoJump();
+	void ReleaseJump();
 
 	//void OnComponentHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
-	void AddGravity(float DeltaTime);
 
 
 };

@@ -32,8 +32,8 @@ void AStefano_Pawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	Move(DeltaTime);
-	AddGravity(DeltaTime);
+	MoveHorizontal(DeltaTime);
+	MoveVertical(DeltaTime);
 }
 
 // Called to bind functionality to input
@@ -43,16 +43,18 @@ void AStefano_Pawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 	PlayerInputComponent->BindAxis("MoveX", this, &AStefano_Pawn::UpdateVelocity);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AStefano_Pawn::DoJump);
+	PlayerInputComponent->BindAction("Jump", IE_Released, this, &AStefano_Pawn::ReleaseJump);
 }
 
 void AStefano_Pawn::UpdateVelocity(float Input)
 {
-	Velocity.Y = Input;
+	Velocity.Y += Input * MoveSpeed;
+	Velocity.Y *= (1 - YDrag);
 
 	//UE_LOG(LogTemp, Warning, TEXT("Velocity is: %f"), Velocity);
 }
 
-void AStefano_Pawn::Move(float DeltaTime)
+void AStefano_Pawn::MoveHorizontal(float DeltaTime)
 {
 	const float MoveValue = Velocity.Y * DeltaTime;
 
@@ -73,11 +75,20 @@ void AStefano_Pawn::DoJump()
 		UE_LOG(LogTemp, Warning, TEXT("Jumping."));
 
 		Velocity.Z = JumpForce;
+
+		JumpPressed = true;
 	}
 }
 
-void AStefano_Pawn::AddGravity(float DeltaTime)
+void AStefano_Pawn::ReleaseJump()
 {
+	JumpPressed = false;
+}
+
+void AStefano_Pawn::MoveVertical(float DeltaTime)
+{
+	bool UseLightGravity = JumpPressed && Velocity.Z > 0.0f;
+	float Gravity = UseLightGravity ? LightGravity : HeavyGravity;
 	Velocity.Z += Gravity * DeltaTime;
 
 	const FRotator Rot = GetActorRotation();
