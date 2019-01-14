@@ -56,10 +56,10 @@ public:
 
 	void DoJump();
 
-	//void OnComponentHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	void OnComponentHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 	void AddGravity(float DeltaTime);
 
-	bool Grounded;
+	bool IsGrounded;
 
 };
